@@ -1,43 +1,63 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import './subi.css'
+
+function Hijo(prop1) {
+  return <div>
+    El nom del fill és {prop1.nom}
+    <Nieto nom="none"/> {/*comentario en jsx entre llaves */}
+  </div>
+}
+
+function Nieto({nom}) {
+  return <div>
+    Nieto {nom}
+  </div>
+}
+
+// a Hija, passem només el valor "destructiring"
+
+function Hija({nom}) {
+  nom += " Subirana" // puc modificar la propietat, però no el valor de la crida de la funció.
+  return <div>
+    El nom de la filla és {nom}
+  </div>
+}
+
+function Filla_2({nom, saldo}) {
+  return <div>
+    El nom de la filla és {nom} i el saldo és {saldo}
+  </div>
+}
+
+function Fill_2(param) {
+  return <div>
+    El nom del fill és {param.nom} i el saldo és {param.saldo}
+  </div>
+}
+
+//Anem a fer que puguem canviar el saldo.
+function Elf({nom, saldo}) {
+  return <div>
+    El nom és {nom} i el saldo és {saldo} 
+    <br></br>
+    <button onClick={() => { cambiarSaldo(saldo) }}>Cambiar saldo</button>
+  </div>
+}
+
+function cambiarSaldo(saldo) {
+  saldo += 100
+  console.log(saldo)
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <p>Hello world</p>
+      <Hijo nom="Òscar" />
+      <Hija nom="Sara" />
+      <Filla_2 nom="Sara" saldo="100" />
+      <Fill_2 nom="Òscar" saldo="200" />
+      <Elf nom="Encarni" saldo="300" />
     </div>
   )
 }

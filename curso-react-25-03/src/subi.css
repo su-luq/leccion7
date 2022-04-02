@@ -1,0 +1,5 @@
+div {
+    /* farem que els divs tinguin marcs negres - caldrà fer els imports necessaris, per exemple a app.jsx*/
+    border: 1px solid black;
+    padding: 20px
+}
