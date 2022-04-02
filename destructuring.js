@@ -57,4 +57,3 @@ console.log(restoArray); // [2,3,4,new Date()]
 v2 = [6,7,8];
 v3 = [...v1, ...v2];
 console.log (v1," # ", v2, " ## ", v3); // [1,2,3,4,new Date(), 6,7,8]
-
