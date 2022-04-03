@@ -41,6 +41,7 @@ function App() {
   
   const value = {estado, setEstado}
 
+  console.log (estado)
   return(
     <Contexto.Provider value={value}>
       <div className="App">
