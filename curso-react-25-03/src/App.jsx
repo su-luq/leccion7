@@ -1,7 +1,7 @@
 // Exclusiu per React.context
 
 import './subi.css'
-import { useState, createContext, useContext } from 'react'
+import { useState, createContext, useContext, useEffect } from 'react'
 
 function Hijo({nom, nieto}) {
   const {estado, setEstado} = useContext(Contexto)
@@ -36,15 +36,36 @@ const Contexto = createContext()
 
 function App() {
   const [estado, setEstado] = useState({
-    saldo: 0
+    saldo: 0,
+    mov: [] /* afegeixo un array d'estats per poder guardar els estats anteriors */
   })
   
   const value = {estado, setEstado}
 
-  console.log (estado)
+  // S'executara una sola vegada
+  useEffect(() => {
+    console.log ("Una sola vez: ", estado)
+  }, [])
+  
+  // S'executara cada vegada que es modifiqui el estado
+  useEffect(() => {
+    setEstado({
+      ...estado,
+      mov: [...estado.mov,
+      { fecha: new Date().toISOString, saldo: estado.saldo }]
+    })
+  }, [estado.saldo]);
+
+  // S'executara cada vegada que faci un bucle la funció.
+  console.log ("Estado: ", estado) // se executara cada vegada que es modifici el estado
+
   return(
     <Contexto.Provider value={value}>
       <div className="App">
+        <h1>Lista de cambios de saldo</h1>
+        <ul>
+            {estado.mov.map(mov => <li key={mov.fecha}>{mov.fecha} = {mov.saldo}</li>)}
+        </ul>
         <Madre nom="Encarnita" />
       </div>
     </Contexto.Provider>
