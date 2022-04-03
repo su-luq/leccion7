@@ -16,7 +16,7 @@ function Hijo({nom, nieto}) {
 function Nieto({nom}) {
   const {estado, setEstado} = useContext(Contexto)
   return <div>
-    Hijo: {nom} = {estado.saldo}
+    Nieto: {nom} = {estado.saldo}
     <br></br>
     <button onClick={() => setEstado({saldo: estado.saldo - 10})}>Gastar</button>
   </div>
