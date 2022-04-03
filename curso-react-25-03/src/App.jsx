@@ -1,4 +1,5 @@
 import './subi.css'
+import { useState } from 'react'
 
 function Hijo(prop1) {
   return <div>
@@ -44,13 +45,46 @@ function Elf({nom, saldo}) {
 }
 
 function cambiarSaldo(saldo) {
-  saldo += 100
-  console.log(saldo)
+  return saldo += 100
+}
+
+// para canviar realmente un valor, debemos meternos en la gestión del estado.
+function ElfSaldo({nom, saldo}) {
+  const [saldoElf, setSaldoElf] = useState(saldo) // saldoElf, nova variablem setSaldoElf funció i useState inicialització de valor inicial.
+
+  function cambiarSaldoElf () {
+    setSaldoElf(saldoElf + 10)
+  }
+  
+  return <div>
+    El nom és {nom} i el saldo és {saldoElf} 
+    <br></br>
+    <button onClick={() => { cambiarSaldoElf() }}>Cambiar saldo</button>
+  </div>
+}
+
+// però com actualitzem el saldo d'una variable global?
+
+// Primer intent, passant la funció de canvi.
+function ElfSaldo2({nom, saldo, setSaldoElf: setSaldoNew}) {
+  const [saldoElf, setSaldoElf] = useState(saldo) // saldoElf, nova variablem setSaldoElf funció i useState inicialització de valor inicial.
+
+  function cambiarSaldoElf () {
+    setSaldoElf(saldoElf + 10)
+    setSaldoNew(saldoElf + 10)
+  }
+  
+  return <div>
+    Passant la funció de set. El nom és {nom} i el saldo és {saldoElf} 
+    <br></br>
+    <button onClick={() => { cambiarSaldoElf() }}>Cambiar saldo</button>
+  </div>
 }
 
 function App() {
- 
-  return (
+  const [saldoElfMain, setSaldoElfMain] = useState(1000)
+  
+  return(
     <div className="App">
       <p>Hello world</p>
       <Hijo nom="Òscar" />
@@ -58,6 +92,9 @@ function App() {
       <Filla_2 nom="Sara" saldo="100" />
       <Fill_2 nom="Òscar" saldo="200" />
       <Elf nom="Encarni" saldo="300" />
+      <p>Encarni {saldoElfMain}</p>
+      <ElfSaldo nom="Encarni" saldo={saldoElfMain} />
+      <ElfSaldo2 nom="Encarni" saldo={saldoElfMain} setSaldoElf={setSaldoElfMain} />
     </div>
   )
 }
